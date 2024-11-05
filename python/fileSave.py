@@ -4,10 +4,8 @@ def save_board(lines):
     line = ""
     four_cells = [0, 0, 0, 0]
     i = 0
-    print ("lines: ", lines)
     while (i < lines.__len__()):
         for (j) in range(4):
-            print("i: ", i)
             if (i < lines.__len__()):
                 four_cells[j] = lines[i]
             i += 1

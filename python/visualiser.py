@@ -26,7 +26,6 @@ class MyGame(arcade.Window):
         if symbol == arcade.key.ESCAPE:
             arcade.close_window()
         if symbol == arcade.key.ENTER:
-            print("Cells: ", self.cells)
             save_board(self.cells)
 
     def draw_board(self):
@@ -56,6 +55,28 @@ class MyGame(arcade.Window):
                 cell_x = x - (radius / 2) + (pos % number_of_lines + 1) * line_spacing
                 cell_y = y - (radius / 2) + (pos // number_of_lines + 1) * line_spacing
                 arcade.draw_circle_filled(cell_x, cell_y, (line_spacing / 2), color)
+    
+    def on_mouse_press(self, x, y, button, modifiers):
+        check_cells(self.cells, x, y)
+        pass
+
+def check_cells(cells, x, y):
+    radius = SCREEN_HEIGHT - 10
+    x_center = SCREEN_WIDTH / 2
+    y_center = SCREEN_HEIGHT / 2
+    line_spacing = radius / (number_of_lines + 1)
+    for i in range(number_of_lines):
+        for j in range(number_of_lines):
+            cell_x = x_center - (radius / 2) + (j + 1) * line_spacing
+            cell_y = y_center - (radius / 2) + (i + 1) * line_spacing
+            if (x - cell_x) ** 2 + (y - cell_y) ** 2 <= (line_spacing / 2) ** 2:
+                pos = i * number_of_lines + j
+                if cells[pos] == 0:
+                    cells[pos] = 1
+                elif cells[pos] == 1:
+                    cells[pos] = 2
+                else:
+                    cells[pos] = 0
 
 def separate_four_cells(packed_byte):
     return ((packed_byte >> 6) & 0b11, (packed_byte >> 4) & 0b11, (packed_byte >> 2) & 0b11, packed_byte & 0b11)
@@ -67,16 +88,22 @@ def analyse_content(file_content, number_of_lines):
     
     return cells[:number_of_lines * number_of_lines]  # Limit to the board size
 
+def print_usage():
+    print("\n\tUsage: python visualiser.py file_name [number_of_lines]\n")
+    print("\t\tfile_name: The name of the file containing the board")
+    print("\t\tnumber_of_lines: The number of lines in the board (default 20)\n")
+
 def main():
     global number_of_lines  # Keep it global for simplicity in drawing
     number_of_lines = 20
     file_name = ""
 
+    if len(sys.argv) < 2:
+        print_usage()
+        return
     if len(sys.argv) == 3:
-        number_of_lines = int(sys.argv[1])  # Convert to int
-        file_name = sys.argv[2]
-    elif len(sys.argv) == 2:
-        file_name = sys.argv[1]
+        number_of_lines = int(sys.argv[2])  # Convert to int
+    file_name = sys.argv[1]
 
     with open(file_name, "r") as file:
         file_content = file.read()
