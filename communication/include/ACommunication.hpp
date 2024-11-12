@@ -17,7 +17,7 @@ class ACommunication : public ICommunication {
 
         void Send(std::string message) override
         {
-            std::cout << message << "\n" << std::endl;
+            std::cout << message << std::endl;
         }
         std::string Receive() override
         {
@@ -34,15 +34,29 @@ class ACommunication : public ICommunication {
             message += std::to_string(y);
             Send(message);
         }
+
         void About() override
         {
             Send("name=\"pbrain-gomoku-ai\", version=\"0.1\", author=\"Flo and Axel\", country=\"FR\"");
         }
+
         void Uknown() override
         {
             Send("UNKNOWN");
         }
+
+        void dim(int dim)
+        {
+            _dim = dim;
+        }
+
+        int dim()
+        {
+            return _dim;
+        }
+
     protected:
+        int _dim;
     private:
 };
 
