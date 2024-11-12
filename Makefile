@@ -2,7 +2,8 @@ CXX = g++
 
 CXXFLAGS = -I./communication/include/
 
-SRC = main.cpp
+SRC = main.cpp			\
+	  communication/src/ACommunication.cpp	\
 
 OBJ = $(SRC:.cpp=.o)
 

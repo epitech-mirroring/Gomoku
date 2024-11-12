@@ -9,6 +9,7 @@
 #define ICOMMUNICATION_HPP_
 
 #include <iostream>
+#include <vector>
 
 class ICommunication {
     public:
@@ -21,6 +22,8 @@ class ICommunication {
         void virtual Play(int x, int y) = 0;
         void virtual About() = 0;
         void virtual Uknown() = 0;
+        void virtual analyse() = 0;
+        void virtual start(std::vector<std::string> tab) = 0;
     protected:
     private:
 };

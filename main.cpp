@@ -11,6 +11,6 @@ int main()
 {
     ACommunication com;
     
-    com.Send("Hello World");
+    com.analyse();
     return 0;
 }

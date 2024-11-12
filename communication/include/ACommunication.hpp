@@ -15,6 +15,8 @@ class ACommunication : public ICommunication {
         ACommunication() = default;
         ~ACommunication() = default;
 
+        void analyse() override;
+        void start(std::vector<std::string> tab) override;
         void Send(std::string message) override
         {
             std::cout << message << std::endl;
@@ -57,6 +59,7 @@ class ACommunication : public ICommunication {
 
     protected:
         int _dim;
+        bool _isRunning;
     private:
 };
 
