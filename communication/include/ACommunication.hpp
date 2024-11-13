@@ -17,16 +17,19 @@ class ACommunication : public ICommunication {
 
         void analyse() override;
         void start(std::vector<std::string> tab) override;
+        void turn(std::vector<std::string> tab) override;
         void Send(std::string message) override
         {
             std::cout << message << std::endl;
         }
+
         std::string Receive() override
         {
             std::string message;
-            std::cin >> message;
+            std::getline(std::cin, message);
             return message;
         }
+
 
         void Play(int x, int y) override
         {
@@ -39,7 +42,7 @@ class ACommunication : public ICommunication {
 
         void About() override
         {
-            Send("name=\"pbrain-gomoku-ai\", version=\"0.1\", author=\"Flo and Axel\", country=\"FR\"");
+            Send("name=\"SomeBrain\"");
         }
 
         void Uknown() override

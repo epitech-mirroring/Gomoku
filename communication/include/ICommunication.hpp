@@ -24,6 +24,7 @@ class ICommunication {
         void virtual Uknown() = 0;
         void virtual analyse() = 0;
         void virtual start(std::vector<std::string> tab) = 0;
+        void virtual turn(std::vector<std::string> tab) = 0;
     protected:
     private:
 };
