@@ -1,2 +1,3 @@
 # Gomoku
-The best ai for Gomoku out there
+
+The best AI for Gomoku out there

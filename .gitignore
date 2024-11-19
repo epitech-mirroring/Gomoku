@@ -1,3 +1,5 @@
 *.o
 pbrain-gomoku-ai
 .vscode
+.idea/
+cmake-build-debug/

@@ -5,13 +5,13 @@
 ** main
 */
 
-#include <iostream>
-#include <fstream>
-#include "tempBoard.hpp"
+#include "src/Communication.hpp"
+#include "src/brains/DumbBrain.hpp"
 
-int main()
-{
-    Gomoku::tempBoard board(20);
+int main() {
+    DumbBrain brain(new DumbBrain::BoardType());
+    Communication com(&brain);
 
+    com.analyze();
     return 0;
 }
