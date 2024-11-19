@@ -5,12 +5,13 @@
 ** main
 */
 
-#include "ACommunication.hpp"
+#include <iostream>
+#include <fstream>
+#include "tempBoard.hpp"
 
 int main()
 {
-    ACommunication com;
-    
-    com.analyse();
+    Gomoku::tempBoard board(20);
+
     return 0;
 }

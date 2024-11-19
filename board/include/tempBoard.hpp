@@ -22,7 +22,7 @@ namespace Gomoku
 
     protected:
         char *board;
-        int size;
+        int _size;
     };
     
 } // namespace Gomoku

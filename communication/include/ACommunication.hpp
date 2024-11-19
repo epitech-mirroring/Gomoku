@@ -40,7 +40,6 @@ class ACommunication : public ICommunication {
             message += ", ";
             message += std::to_string(y);
             Send(message);
-            _board->setCellState(x, y, Gomoku::CellState::BLACK);
             
         }
 
@@ -67,7 +66,6 @@ class ACommunication : public ICommunication {
     protected:
         int _dim;
         bool _isRunning;
-        std::unique_ptr<IBoard> _board;
     private:
 };
 

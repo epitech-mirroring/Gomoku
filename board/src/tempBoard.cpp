@@ -6,16 +6,25 @@
 */
 
 #include "tempBoard.hpp"
-#include <stdlib.h>
+#include <iostream>
 
 using namespace Gomoku;
 
 tempBoard::tempBoard(int size)
 {
-    board = (char *)malloc(sizeof(char) * size * size);
+    int malSize = (size * size + 4) / 4;
+    try
+    {
+        board = new char[malSize];
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << "ziern" << '\n';
+    }
 
-    for (int i = 0; i < size * size; i++)
+    for (int i = 0; i < malSize; i++)
         board[i] = 0;
+    _size = size;
 }
 
 tempBoard::~tempBoard()
@@ -25,8 +34,8 @@ tempBoard::~tempBoard()
 
 CellState tempBoard::getCellState(int x, int y) const
 {
-    int posInByte = (x + y * size) % 4;
-    char pos = board[(x + y * size - posInByte) / 4];
+    int posInByte = (x + y * _size) % 4;
+    char pos = board[(x + y * _size - posInByte) / 4];
 
     switch ((pos >> (posInByte * 2)) & 3)
     {
@@ -43,8 +52,8 @@ CellState tempBoard::getCellState(int x, int y) const
 
 void tempBoard::setCellState(int x, int y, CellState state)
 {
-    int posInByte = (x + y * size) % 4;
-    char *pos = board + (x + y * size - posInByte) / 4;
+    int posInByte = (x + y * _size) % 4;
+    char *pos = &board[(x + y * _size - posInByte) / 4];
 
     switch (state)
     {
