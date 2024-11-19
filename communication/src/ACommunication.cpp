@@ -100,6 +100,7 @@ void ACommunication::turn(std::vector<std::string> tab)
         Send("ERROR invalid turn");
         return;
     }
+    _board->setCellState(x, y, Gomoku::CellState::WHITE);
     if (x >= dim() - 1) {
         x = 0;
         y++;

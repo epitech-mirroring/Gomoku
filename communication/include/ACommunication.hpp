@@ -9,6 +9,8 @@
 #define ACOMMUNICATION_HPP_
 
 #include "ICommunication.hpp"
+#include "IBoard.hpp"
+#include <memory>
 
 class ACommunication : public ICommunication {
     public:
@@ -38,6 +40,8 @@ class ACommunication : public ICommunication {
             message += ", ";
             message += std::to_string(y);
             Send(message);
+            _board->setCellState(x, y, Gomoku::CellState::BLACK);
+            
         }
 
         void About() override
@@ -63,6 +67,7 @@ class ACommunication : public ICommunication {
     protected:
         int _dim;
         bool _isRunning;
+        std::unique_ptr<IBoard> _board;
     private:
 };
 
