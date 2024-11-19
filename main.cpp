@@ -5,12 +5,13 @@
 ** main
 */
 
-#include "ACommunication.hpp"
+#include "src/Communication.hpp"
+#include "src/brains/DumbBrain.hpp"
 
-int main()
-{
-    ACommunication com;
-    
-    com.analyse();
+int main() {
+    DumbBrain brain(new DumbBrain::BoardType());
+    Communication com(&brain);
+
+    com.analyze();
     return 0;
 }
