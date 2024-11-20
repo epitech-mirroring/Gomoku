@@ -19,7 +19,7 @@ Board::Board(int size)
     }
     catch(const std::exception& e)
     {
-        std::cerr << "ziern" << '\n';
+        std::cerr << e.what() << '\n';
     }
 
     for (int i = 0; i < malSize; i++)
