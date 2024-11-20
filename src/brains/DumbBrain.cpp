@@ -29,5 +29,6 @@ std::pair<int, int> DumbBrain::getNextMove(std::pair<int, int> lastMove) {
 }
 
 int DumbBrain::scoreBoard(const BoardType *board) {
+    (void)board;
     return 0;
 }

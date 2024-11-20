@@ -5,13 +5,33 @@
 ** main
 */
 
-#include "src/Communication.hpp"
-#include "src/brains/DumbBrain.hpp"
+#include "PlayAnalysis.hpp"
+#include <iostream>
+#include <thread>
+
+int evalFunction(Gomoku::Board board) {
+    int result = 0;
+    for (int i = 0; i < board.getSize(); i++) {
+        for (int j = 0; j < board.getSize(); j++) {
+            if (board.getCellState(i, j) == Gomoku::CellState::WHITE) {
+                result += i + j;
+            }
+            if (board.getCellState(i, j) == Gomoku::CellState::BLACK) {
+                result -= i + j;
+            }
+        }
+    }
+    return 0;
+}
 
 int main() {
-    DumbBrain brain(new DumbBrain::BoardType());
-    Communication com(&brain);
+    Gomoku::PlayAnalysis playAnalysis;
+    Gomoku::Board board(20);
 
-    com.analyze();
+    board.setCellState(0, 0, Gomoku::CellState::WHITE);
+    board.setCellState(1, 1, Gomoku::CellState::BLACK);
+
+    playAnalysis.getScore(board, 0, 0, Gomoku::CellState::WHITE, evalFunction);
+    board.print("board.txt");
     return 0;
 }

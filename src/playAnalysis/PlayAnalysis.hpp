@@ -19,7 +19,7 @@ namespace Gomoku
             PlayAnalysis();
             ~PlayAnalysis();
 
-            int getScore(Board board, int x, int y, CellState player, std::function<int(Board)> evalFunc, clock_t start = 0);
+            int getScore(Board board, int x, int y, CellState player, std::function<int(Board)> evalFunc, clock_t start = 0, int num = 0);
 
         protected:
         private:
