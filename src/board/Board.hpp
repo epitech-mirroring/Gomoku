@@ -8,28 +8,31 @@
 #ifndef BOARD_HPP_
 #define BOARD_HPP_
 
-
-namespace Gomoku
-{
+namespace Gomoku {
     enum class CellState {
         EMPTY,
         BLACK,
         WHITE
     };
-    class Board
-    {
+
+    class Board {
     public:
-        Board(int size);
+        explicit Board(int size);
+
         ~Board();
-        CellState getCellState(int x, int y) const;
-        void setCellState(int x, int y, CellState state);
+
+        [[nodiscard]] CellState getCellState(int x, int y) const;
+
+        void setCellState(int x, int y, CellState state) const;
+
+        [[nodiscard]] char *getBinary() const;
+
+        [[nodiscard]] int getSize() const;
 
     protected:
         char *_board;
         int _size;
     };
-    
 } // namespace Gomoku
-
 
 #endif /* !BOARD_HPP_ */

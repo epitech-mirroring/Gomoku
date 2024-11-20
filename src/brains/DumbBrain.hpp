@@ -10,13 +10,17 @@
 #define DUMBBRAIN_HPP
 #include "ABrain.hpp"
 
-class DumbBrain final : public ABrain {
-public:
-    explicit DumbBrain(const BoardType *board);
+namespace Gomoku {
+    class DumbBrain final : public ABrain {
+    public:
+        explicit DumbBrain(const BoardType *board);
 
-    ~DumbBrain() override = default;
+        ~DumbBrain() override = default;
 
-    std::pair<int, int> getNextMove(std::pair<int, int> lastMove) override;
-};
+        std::pair<int, int> getNextMove(std::pair<int, int> lastMove) override;
+
+        int scoreBoard(const BoardType *board) override;
+    };
+}
 
 #endif //DUMBBRAIN_HPP

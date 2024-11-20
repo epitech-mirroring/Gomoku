@@ -7,6 +7,8 @@
 
 #include "Communication.hpp"
 
+using namespace Gomoku;
+
 Communication::Communication(ABrain *brain): _brain(brain) {
     _dim = 20;
     _isRunning = true;
