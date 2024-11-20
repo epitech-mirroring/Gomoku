@@ -12,6 +12,8 @@
 #include <utility>
 #endif
 
+using namespace Gomoku;
+
 ABrain::ABrain(std::string name, const BoardType *board) : _name(std::move(name)),
                                                            _board(board) {
 }
