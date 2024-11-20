@@ -13,9 +13,10 @@ namespace Gomoku
 {
     enum class CellState {
         EMPTY,
-        BLACK,
-        WHITE
+        BLACK, // Opponent
+        WHITE  // Us
     };
+
     class Board
     {
     public:
