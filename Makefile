@@ -5,7 +5,8 @@ CXXFLAGS = -I./src/ -std=c++17 -Wall -Wextra -Werror
 SRC = main.cpp					\
 	  src/Communication.cpp 	\
 	  src/brains/ABrain.cpp 	\
-	  src/brains/DumbBrain.cpp
+	  src/brains/DumbBrain.cpp  \
+	  src/board/Board.cpp		\
 
 OBJ = $(SRC:.cpp=.o)
 
