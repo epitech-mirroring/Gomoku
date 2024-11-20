@@ -2,20 +2,20 @@
 ** EPITECH PROJECT, 2024
 ** Gomoku
 ** File description:
-** tempBoard
+** board
 */
 
-#include "tempBoard.hpp"
+#include "board.hpp"
 #include <iostream>
 
 using namespace Gomoku;
 
-tempBoard::tempBoard(int size)
+board::board(int size)
 {
     int malSize = (size * size + 4) / 4;
     try
     {
-        board = new char[malSize];
+        _board = new char[malSize];
     }
     catch(const std::exception& e)
     {
@@ -23,19 +23,19 @@ tempBoard::tempBoard(int size)
     }
 
     for (int i = 0; i < malSize; i++)
-        board[i] = 0;
+        _board[i] = 0;
     _size = size;
 }
 
-tempBoard::~tempBoard()
+board::~board()
 {
-    free(board);
+    delete[] _board;
 }
 
-CellState tempBoard::getCellState(int x, int y) const
+CellState board::getCellState(int x, int y) const
 {
     int posInByte = (x + y * _size) % 4;
-    char pos = board[(x + y * _size - posInByte) / 4];
+    char pos = _board[(x + y * _size - posInByte) / 4];
 
     switch ((pos >> (posInByte * 2)) & 3)
     {
@@ -50,10 +50,10 @@ CellState tempBoard::getCellState(int x, int y) const
     }
 }
 
-void tempBoard::setCellState(int x, int y, CellState state)
+void board::setCellState(int x, int y, CellState state)
 {
     int posInByte = (x + y * _size) % 4;
-    char *pos = &board[(x + y * _size - posInByte) / 4];
+    char *pos = &_board[(x + y * _size - posInByte) / 4];
 
     switch (state)
     {
