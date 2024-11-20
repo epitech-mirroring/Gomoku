@@ -16,11 +16,11 @@ namespace Gomoku
         BLACK,
         WHITE
     };
-    class board
+    class Board
     {
     public:
-        board(int size);
-        ~board();
+        Board(int size);
+        ~Board();
         CellState getCellState(int x, int y) const;
         void setCellState(int x, int y, CellState state);
 

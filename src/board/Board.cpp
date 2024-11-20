@@ -2,15 +2,15 @@
 ** EPITECH PROJECT, 2024
 ** Gomoku
 ** File description:
-** board
+** Board
 */
 
-#include "board.hpp"
+#include "Board.hpp"
 #include <iostream>
 
 using namespace Gomoku;
 
-board::board(int size)
+Board::Board(int size)
 {
     int malSize = (size * size + 4) / 4;
     try
@@ -27,12 +27,12 @@ board::board(int size)
     _size = size;
 }
 
-board::~board()
+Board::~Board()
 {
     delete[] _board;
 }
 
-CellState board::getCellState(int x, int y) const
+CellState Board::getCellState(int x, int y) const
 {
     int posInByte = (x + y * _size) % 4;
     char pos = _board[(x + y * _size - posInByte) / 4];
@@ -50,7 +50,7 @@ CellState board::getCellState(int x, int y) const
     }
 }
 
-void board::setCellState(int x, int y, CellState state)
+void Board::setCellState(int x, int y, CellState state)
 {
     int posInByte = (x + y * _size) % 4;
     char *pos = &_board[(x + y * _size - posInByte) / 4];
