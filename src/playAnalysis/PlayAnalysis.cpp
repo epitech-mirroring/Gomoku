@@ -6,6 +6,7 @@
 */
 
 #include "PlayAnalysis.hpp"
+#include <iostream>
 
 using namespace Gomoku;
 
@@ -20,7 +21,7 @@ PlayAnalysis::~PlayAnalysis()
 {
 }
 
-int PlayAnalysis::getScore(Board board, int x, int y, CellState player, std::function<int(Board)> evalFunction, clock_t start = 0)
+int PlayAnalysis::getScore(Board board, int x, int y, CellState player, std::function<int(Board)> evalFunction, clock_t start)
 {
     int score = 0;
     int highestScore = 0;
@@ -54,10 +55,10 @@ int PlayAnalysis::getScore(Board board, int x, int y, CellState player, std::fun
                 {
                     score = lowestScore;
                 }
-                if (player == CellState::WHITE && score > TO_GET || player == CellState::BLACK && score < -TO_GET || clock() - start > TIME_LIMIT * CLOCKS_PER_SEC)
+                if ((player == CellState::WHITE && score > TO_GET) || (player == CellState::BLACK && score < -TO_GET) || clock() - start > TIME_LIMIT * CLOCKS_PER_SEC)
                     return score;
             }
         }
     }
-    return 
+    return score;
 }

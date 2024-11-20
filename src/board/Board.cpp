@@ -20,7 +20,6 @@ Board::Board(const int size) {
 }
 
 Board::~Board() {
-    delete[] _board;
 }
 
 CellState Board::getCellState(const int x, const int y) const {
