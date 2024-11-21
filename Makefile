@@ -1,3 +1,4 @@
+TARGET = pbrain-gomoku-ai
 
 all: $(TARGET)
 
@@ -6,7 +7,7 @@ $(TARGET):
 	cmake --build build
 
 clean:
-	cmkae --build build --target clean
+	[ ! -d build ] || cmake --build build --target clean
 
 fclean: clean
 	rm -rf build

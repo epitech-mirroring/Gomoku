@@ -4,3 +4,4 @@ pbrain-gomoku-ai
 .idea/
 cmake-build-debug/
 testFiles/
+build/
