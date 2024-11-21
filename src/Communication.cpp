@@ -141,3 +141,7 @@ void Communication::setDim(const int dim) {
 void Communication::setBrain(ABrain *brain) {
     _brain = brain;
 }
+
+const ABrain *Communication::getBrain() const {
+    return _brain;
+}

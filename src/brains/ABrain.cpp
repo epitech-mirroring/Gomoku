@@ -14,8 +14,8 @@
 
 using namespace Gomoku;
 
-ABrain::ABrain(std::string name, const BoardType *board) : _name(std::move(name)),
-                                                           _board(board) {
+ABrain::ABrain(std::string name, const BoardType *board, const PlayAnalysis &playAnalysis)
+    : _name(std::move(name)), _board(board), _playAnalysis(playAnalysis) {
 }
 
 std::string ABrain::getName() const {

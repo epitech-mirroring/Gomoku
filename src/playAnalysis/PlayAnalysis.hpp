@@ -10,19 +10,19 @@
 
 #include <ctime>
 #include <functional>
-#include "Board.hpp"
 
-namespace Gomoku
-{
+#include "board/Board.hpp"
+
+namespace Gomoku {
     class PlayAnalysis {
-        public:
-            PlayAnalysis();
-            ~PlayAnalysis();
+    public:
+        PlayAnalysis();
 
-            int getScore(Board board, int x, int y, CellState player, std::function<int(Board)> evalFunc, clock_t start = 0, int num = 0);
+        ~PlayAnalysis();
 
-        protected:
-        private:
+        int getScore(const Board *board, int x, int y, CellState player,
+                     const std::function<int(const Board *)> &evalFunc, clock_t start = 0,
+                     int num = 0) const;
     };
 } // namespace Gomoku
 

@@ -7,62 +7,73 @@
 
 #include "PlayAnalysis.hpp"
 #include <iostream>
-#include <limits.h>
+#include <climits>
 
 using namespace Gomoku;
 
-const int LIMIT = 20;
-const int TIME_LIMIT = 4;
+constexpr int LIMIT = 20;
+constexpr int TIME_LIMIT = 1000;
 
-PlayAnalysis::PlayAnalysis()
-{
-}
+PlayAnalysis::PlayAnalysis() = default;
 
-PlayAnalysis::~PlayAnalysis()
-{
-}
+PlayAnalysis::~PlayAnalysis() = default;
 
-int PlayAnalysis::getScore(Board board, int x, int y, CellState player, std::function<int(Board)> evalFunction, clock_t start, int num)
-{
-    int score = 0;
-    int highestScore = 0;
-    int lowestScore = 0;
-    std::string filename = "x" + std::to_string(x) + "y" + std::to_string(y) + ".txt";
+int PlayAnalysis::getScore(const Board *board, const int x, const int y,
+                           const CellState player,
+                           const std::function<int(const Board *)> &evalFunc,
+                           const clock_t start,
+                           const int num) const {
+    // Play the given move on the board
+    board->setCellState(x, y, player);
 
-    board.print(filename);
-    if (start == 0)
-        start = clock();
-    
-    board.setCellState(x, y, player);
-    score = evalFunction(board);
-
-    if (clock() - start > TIME_LIMIT * CLOCKS_PER_SEC || num > LIMIT || score >= INT_MAX || score <= INT_MIN)
-        return score;
-    for (int i = 0; i < board.getSize(); i++)
-    {
-        for (int j = 0; j < board.getSize(); j++)
-        {
-            if (board.getCellState(i, j) == CellState::EMPTY)
-            {
-                if (num == 0)
-                    std::cout << "x: " << i << " y: " << j << std::endl;
-                int newScore = getScore(board, i, j, player == CellState::BLACK ? CellState::WHITE : CellState::BLACK, evalFunction, start, num + 1);
-                if (newScore < lowestScore)
-                    lowestScore = newScore;
-                if (newScore > highestScore)
-                    highestScore = newScore;
-                if (player == CellState::WHITE && highestScore > score)
-                {
-                    score = highestScore;
+    // Evaluate all the possible responses
+    int bestScore = INT_MIN;
+    std::vector<std::tuple<std::pair<int, int>, int> > tempMoves;
+    for (int i = 0; i < board->getSize(); i++) {
+        for (int j = 0; j < board->getSize(); j++) {
+            if (board->getCellState(i, j) == EMPTY) {
+                // Create a new board with the new move
+                board->setCellState(i, j, player == WHITE ? BLACK : WHITE);
+                int score = evalFunc(board);
+                tempMoves.emplace_back(std::make_pair(i, j), score);
+                board->setCellState(i, j, EMPTY);
+                if (score > bestScore) {
+                    bestScore = score;
                 }
-                else if (player == CellState::BLACK && lowestScore < score)
-                {
-                    score = lowestScore;
-                }
-                if (score >= INT_MAX || score <= INT_MIN || clock() - start > TIME_LIMIT * CLOCKS_PER_SEC)
-                    return score;
             }
         }
     }
-    return score;
+
+    // Cutoff the moves that are not good enough
+    constexpr float cutoff = 0.9; // If the score is above 90% of the best score, keep it
+    const float minScore = static_cast<float>(bestScore) * cutoff;
+
+    std::vector<std::pair<int, int> > moves;
+    for (const auto &[move, score]: tempMoves) {
+        if (static_cast<float>(score) >= minScore) {
+            moves.push_back(move);
+        }
+    }
+
+    // Recursively evaluate the moves
+    for (const auto &[x, y]: moves) {
+        if (num >= LIMIT || clock() - start >= TIME_LIMIT * CLOCKS_PER_SEC) {
+            board->setCellState(x, y, EMPTY);
+            return bestScore;
+        }
+        board->setCellState(x, y, player);
+        const int score = -getScore(board, x, y,
+                                    player == WHITE
+                                        ? BLACK
+                                        : WHITE, evalFunc, start, num + 1);
+        board->setCellState(x, y, EMPTY);
+        if (score > bestScore) {
+            bestScore = score;
+        }
+    }
+
+    board->setCellState(x, y, EMPTY);
+    std::cout << "Move from " << (player == WHITE ? "WHITE" : "BLACK") <<
+            " at " << x << ", " << y << " scored " << bestScore << std::endl;
+    return bestScore;
 }

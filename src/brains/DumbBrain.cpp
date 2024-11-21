@@ -10,7 +10,8 @@
 
 using namespace Gomoku;
 
-DumbBrain::DumbBrain(const BoardType *board) : ABrain("DumbBrain", board) {
+DumbBrain::DumbBrain(const BoardType *board, const PlayAnalysis &playAnalysis)
+    : ABrain("Dumb", board, playAnalysis) {
 }
 
 std::pair<int, int> DumbBrain::getNextMove(std::pair<int, int> lastMove) {
@@ -28,7 +29,7 @@ std::pair<int, int> DumbBrain::getNextMove(std::pair<int, int> lastMove) {
     return std::make_pair(x, y);
 }
 
-int DumbBrain::scoreBoard(const BoardType *board) {
-    (void)board;
+int DumbBrain::scoreBoard(const BoardType *board) const {
+    (void) board;
     return 0;
 }

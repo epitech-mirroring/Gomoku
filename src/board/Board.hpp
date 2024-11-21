@@ -11,10 +11,11 @@
 #include <string>
 
 namespace Gomoku {
-    enum class CellState {
+    enum CellState {
         EMPTY,
         BLACK, // Opponent
-        WHITE  // Us
+        WHITE, // Us
+        OUT_OF_BOUND
     };
 
     class Board {
@@ -31,7 +32,7 @@ namespace Gomoku {
 
         [[nodiscard]] int getSize() const;
 
-        void print(std::string filename) const;
+        void print(const std::string &filename) const;
 
     protected:
         char *_board;

@@ -8,7 +8,6 @@
 #include "Board.hpp"
 #include <iostream>
 #include <fstream>
-#include <cstring>
 
 using namespace Gomoku;
 
@@ -19,27 +18,26 @@ Board::Board(const int size) {
     for (int i = 0; i < malSize; i++)
         _board[i] = 0;
     _size = size;
-    std::cout << malSize << std::endl;
     _mallocSize = malSize;
-    print("board1.txt");
 }
 
-Board::~Board() {
-}
+Board::~Board() = default;
 
 CellState Board::getCellState(const int x, const int y) const {
+    if (x < 0 || x >= _size || y < 0 || y >= _size)
+        return OUT_OF_BOUND;
     const int posInByte = (x + y * _size) % 4;
     const char pos = _board[(x + y * _size - posInByte) / 4];
 
-    switch ((pos >> (posInByte * 2)) & 3) {
+    switch (pos >> posInByte * 2 & 3) {
         case 0:
-            return CellState::EMPTY;
+            return EMPTY;
         case 1:
-            return CellState::WHITE;
+            return WHITE;
         case 2:
-            return CellState::BLACK;
+            return BLACK;
         default:
-            return CellState::EMPTY;
+            return OUT_OF_BOUND;
     }
 }
 
@@ -49,15 +47,15 @@ void Board::setCellState(const int x, const int y, const CellState state) const 
 
     posInByte = 4 - posInByte - 1;
     switch (state) {
-        case CellState::EMPTY:
-            *pos &= ~(3 << (posInByte * 2));
+        case EMPTY:
+            *pos &= ~(3 << posInByte * 2);
             break;
 
-        case CellState::BLACK:
-            *pos &= ~(3 << (posInByte * 2));
+        case BLACK:
+            *pos &= ~(3 << posInByte * 2);
             *pos |= 2 << (posInByte * 2);
             break;
-        case CellState::WHITE:
+        case WHITE:
             *pos &= ~(3 << (posInByte * 2));
             *pos |= 1 << (posInByte * 2);
             break;
@@ -74,8 +72,8 @@ char *Board::getBinary() const {
     return _board;
 }
 
-void Board::print(const std::string filename) const {
-    std::string filePath = "./testFiles/" + filename;
+void Board::print(const std::string &filename) const {
+    std::string filePath = "./" + filename;
     std::ifstream infile(filePath);
     if (infile.good()) {
         infile.close();
