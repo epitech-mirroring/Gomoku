@@ -101,3 +101,7 @@ void Board::print(const std::string &filename) const {
     }
     file.close();
 }
+
+bool Board::isValid(const int x, const int y) const {
+    return x >= 0 && x < _size && y >= 0 && y < _size;
+}

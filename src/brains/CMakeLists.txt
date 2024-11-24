@@ -3,8 +3,10 @@ target_sources(pbrain-gomoku-ai
         ${CMAKE_CURRENT_SOURCE_DIR}/ABrain.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/DefaultBrain.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/DumbBrain.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/BetaBrain.hpp
         PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/ABrain.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/DefaultBrain.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/DumbBrain.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/BetaBrain.cpp
 )
