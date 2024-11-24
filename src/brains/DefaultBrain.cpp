@@ -29,8 +29,10 @@ std::pair<int, int> DefaultBrain::getNextMove(std::pair<int, int> lastMove) {
             }
             int score = this->_playAnalysis.getScore(this->_board, x, y,
                                                      WHITE,
-                                                     [this](const BoardType *board) {
-                                                         return this->scoreBoard(board);
+                                                     [this](const BoardType *board,
+                                                 CellState player) {
+                                                         return this->scoreBoard(
+                                                             board, player);
                                                      });
             moves.emplace_back(std::make_pair(x, y), score);
         }
@@ -87,7 +89,7 @@ static ABrain::Line getLine(const ABrain::BoardType *board, const int x, const i
                    isBlockedAfter, start, visited);
 }
 
-int DefaultBrain::scoreBoard(const BoardType *board) const {
+int DefaultBrain::scoreBoard(const BoardType *board, CellState player) const {
     std::vector<Line> lines;
     std::vector visited(board->getSize(),
                         std::vector<bool>(board->getSize(), false));
@@ -188,5 +190,5 @@ int DefaultBrain::scoreBoard(const BoardType *board) const {
         score += 10 * length * (isBlack ? -1 : 1);
     }
 
-    return score;
+    return player == WHITE ? score : -score;
 }

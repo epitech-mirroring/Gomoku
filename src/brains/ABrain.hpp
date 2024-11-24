@@ -35,7 +35,7 @@ namespace Gomoku {
 
         virtual std::pair<int, int> getNextMove(std::pair<int, int> lastMove) = 0;
 
-        virtual int scoreBoard(const BoardType *board) const = 0;
+        virtual int scoreBoard(const BoardType *board, CellState player) const = 0;
     };
 }
 

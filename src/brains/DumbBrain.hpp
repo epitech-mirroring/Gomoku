@@ -19,7 +19,7 @@ namespace Gomoku {
 
         std::pair<int, int> getNextMove(std::pair<int, int> lastMove) override;
 
-        int scoreBoard(const BoardType *board) const override;
+        int scoreBoard(const BoardType *board, CellState player) const;
     };
 }
 

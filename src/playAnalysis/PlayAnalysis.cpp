@@ -20,7 +20,7 @@ PlayAnalysis::~PlayAnalysis() = default;
 
 int PlayAnalysis::getScore(const Board *board, const int x, const int y,
                            const CellState player,
-                           const std::function<int(const Board *)> &evalFunc,
+                           const std::function<int(const Board *, CellState)> &evalFunc,
                            const clock_t start,
                            const int num) const {
     // Evaluate all the possible responses
@@ -31,7 +31,7 @@ int PlayAnalysis::getScore(const Board *board, const int x, const int y,
             if (board->getCellState(i, j) == EMPTY) {
                 // Create a new board with the new move
                 board->setCellState(i, j, player == WHITE ? BLACK : WHITE);
-                int score = evalFunc(board);
+                int score = evalFunc(board, player);
                 tempMoves.emplace_back(std::make_pair(i, j), score);
                 board->setCellState(i, j, EMPTY);
                 if (score > bestScore) {
@@ -58,10 +58,10 @@ int PlayAnalysis::getScore(const Board *board, const int x, const int y,
             return bestScore;
         }
         board->setCellState(x, y, player);
-        const int score = -getScore(board, x, y,
-                                    player == WHITE
-                                        ? BLACK
-                                        : WHITE, evalFunc, start, num + 1);
+        const int score = getScore(board, x, y,
+                                   player == WHITE
+                                       ? BLACK
+                                       : WHITE, evalFunc, start, num + 1);
         board->setCellState(x, y, EMPTY);
         if (score > bestScore) {
             bestScore = score;

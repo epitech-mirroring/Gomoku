@@ -29,7 +29,8 @@ std::pair<int, int> DumbBrain::getNextMove(std::pair<int, int> lastMove) {
     return std::make_pair(x, y);
 }
 
-int DumbBrain::scoreBoard(const BoardType *board) const {
+int DumbBrain::scoreBoard(const BoardType *board, CellState player) const {
     (void) board;
+    (void) player;
     return 0;
 }

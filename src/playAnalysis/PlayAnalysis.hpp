@@ -21,7 +21,8 @@ namespace Gomoku {
         ~PlayAnalysis();
 
         int getScore(const Board *board, int x, int y, CellState player,
-                     const std::function<int(const Board *)> &evalFunc, clock_t start = 0,
+                     const std::function<int(const Board *, CellState)> &evalFunc,
+                     clock_t start = 0,
                      int num = 0) const;
     };
 } // namespace Gomoku
