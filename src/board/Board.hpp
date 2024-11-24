@@ -8,11 +8,14 @@
 #ifndef BOARD_HPP_
 #define BOARD_HPP_
 
+#include <string>
+
 namespace Gomoku {
-    enum class CellState {
+    enum CellState {
         EMPTY,
-        BLACK,
-        WHITE
+        BLACK, // Opponent
+        WHITE, // Us
+        OUT_OF_BOUND
     };
 
     class Board {
@@ -29,9 +32,12 @@ namespace Gomoku {
 
         [[nodiscard]] int getSize() const;
 
+        void print(const std::string &filename) const;
+
     protected:
         char *_board;
         int _size;
+        int _mallocSize;
     };
 } // namespace Gomoku
 

@@ -1,21 +1,21 @@
 /*
 ** EPITECH PROJECT, 2024
-** GomokuAI
+** Gomoku
 ** File description:
 ** No file there, just an epitech header example.
 ** You can even have multiple lines if you want!
 */
 
-#ifndef DUMBBRAIN_HPP
-#define DUMBBRAIN_HPP
+#ifndef DEFAULTBRAIN_HPP
+#define DEFAULTBRAIN_HPP
 #include "ABrain.hpp"
 
 namespace Gomoku {
-    class DumbBrain final : public ABrain {
+    class DefaultBrain final : public ABrain {
     public:
-        explicit DumbBrain(const BoardType *board, const PlayAnalysis &playAnalysis);
+        explicit DefaultBrain(const BoardType *board, const PlayAnalysis &playAnalysis);
 
-        ~DumbBrain() override = default;
+        ~DefaultBrain() override = default;
 
         std::pair<int, int> getNextMove(std::pair<int, int> lastMove) override;
 
@@ -23,4 +23,4 @@ namespace Gomoku {
     };
 }
 
-#endif //DUMBBRAIN_HPP
+#endif //DEFAULTBRAIN_HPP

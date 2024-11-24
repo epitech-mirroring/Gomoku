@@ -5,13 +5,17 @@
 ** main
 */
 
-#include "src/Communication.hpp"
-#include "src/brains/DumbBrain.hpp"
+#include <thread>
+
+#include "Communication.hpp"
+#include "brains/DefaultBrain.hpp"
+#include "playAnalysis/PlayAnalysis.hpp"
 
 int main() {
-    DumbBrain brain(new DumbBrain::BoardType());
-    Communication com(&brain);
+    const Gomoku::PlayAnalysis playAnalysis;
+    const Gomoku::Board board(20);
+    Gomoku::Communication comm(new Gomoku::DefaultBrain(&board, playAnalysis));
 
-    com.analyze();
+    comm.analyze();
     return 0;
 }

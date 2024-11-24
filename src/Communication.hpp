@@ -55,6 +55,8 @@ namespace Gomoku {
         void setIsRunning(bool is_running);
 
         void setBrain(ABrain *brain);
+
+        [[nodiscard]] const ABrain *getBrain() const;
     };
 }
 

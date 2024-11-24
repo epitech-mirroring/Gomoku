@@ -17,6 +17,10 @@ Communication::Communication(ABrain *brain): _brain(brain) {
 std::string Communication::cleanMessage(std::string message) {
     if (message.find("\n\r") != std::string::npos) {
         message = message.substr(0, message.find("\n\r"));
+    } else if (message.find("\n") != std::string::npos) {
+        message = message.substr(0, message.find("\n"));
+    } else if (message.find("\r") != std::string::npos) {
+        message = message.substr(0, message.find("\r"));
     }
     return message;
 }
@@ -42,7 +46,7 @@ void Communication::analyze() {
         if (command == "START") {
             start(args);
         } else if (command == "BEGIN" || command == "BOARD") {
-            play(0, 0);
+            play(static_cast<int>(_dim / 2), static_cast<int>(_dim / 2));
         } else if (command == "TURN") {
             turn(args);
         } else if (command == "END") {
@@ -140,4 +144,8 @@ void Communication::setDim(const int dim) {
 
 void Communication::setBrain(ABrain *brain) {
     _brain = brain;
+}
+
+const ABrain *Communication::getBrain() const {
+    return _brain;
 }
