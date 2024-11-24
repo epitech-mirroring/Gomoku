@@ -126,7 +126,7 @@ std::pair<int, int> BetaBrain::getNextMove(std::pair<int, int> lastMove) {
             int score = this->_playAnalysis.getScore(this->_board, x, y,
                                                      WHITE,
                                                      [this](const BoardType *board,
-                                                 CellState player) {
+                                                 const CellState player) {
                                                          return this->scoreBoard(
                                                              board, player);
                                                      });
