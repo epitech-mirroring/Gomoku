@@ -20,8 +20,8 @@ DefaultBrain::DefaultBrain(const BoardType *board, const PlayAnalysis &playAnaly
 }
 
 std::pair<int, int> DefaultBrain::getNextMove(std::pair<int, int> lastMove) {
-    (void) lastMove;
     std::vector<std::tuple<std::pair<int, int>, int> > moves;
+    _board->setCellState(lastMove.first, lastMove.second, BLACK);
     for (int x = 0; x < this->_board->getSize(); x++) {
         for (int y = 0; y < this->_board->getSize(); y++) {
             int score = this->_playAnalysis.getScore(this->_board, x, y,
@@ -31,11 +31,13 @@ std::pair<int, int> DefaultBrain::getNextMove(std::pair<int, int> lastMove) {
                                                      });
             moves.emplace_back(std::make_pair(x, y), score);
         }
+
     }
     std::sort(moves.begin(), moves.end(),
               [](const auto &a, const auto &b) {
                   return std::get<1>(a) > std::get<1>(b);
               });
+    _board->setCellState(std::get<0>(moves[0]).first, std::get<0>(moves[0]).second, WHITE);
     return std::get<0>(moves[0]);
 }
 

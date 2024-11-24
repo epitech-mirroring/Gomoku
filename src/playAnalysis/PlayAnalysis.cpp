@@ -43,7 +43,6 @@ int PlayAnalysis::getScore(const Board *board, const int x, const int y,
             }
         }
     }
-
     // Cutoff the moves that are not good enough
     constexpr float cutoff = 0.9; // If the score is above 90% of the best score, keep it
     const float minScore = static_cast<float>(bestScore) * cutoff;
@@ -57,7 +56,6 @@ int PlayAnalysis::getScore(const Board *board, const int x, const int y,
 
     // Recursively evaluate the moves
     for (const auto &[x, y]: moves) {
-        std::cerr << "time: " << clock() - start << std::endl;
         if (num >= LIMIT || clock() - start >= TIME_LIMIT / CLOCKS_PER_SEC) {
             board->setCellState(x, y, EMPTY);
             return bestScore;
