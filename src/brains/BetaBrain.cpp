@@ -9,6 +9,7 @@
 #include "BetaBrain.hpp"
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace Gomoku;
 constexpr int FIVE_IN_A_ROW = 100000; // Win condition
