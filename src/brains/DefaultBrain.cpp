@@ -22,7 +22,6 @@ DefaultBrain::DefaultBrain(const BoardType *board, const PlayAnalysis &playAnaly
 std::pair<int, int> DefaultBrain::getNextMove(std::pair<int, int> lastMove) {
     std::vector<std::tuple<std::pair<int, int>, int> > moves;
     _board->setCellState(lastMove.first, lastMove.second, BLACK);
-    _board->print("board1.txt");
     for (int x = 0; x < this->_board->getSize(); x++) {
         for (int y = 0; y < this->_board->getSize(); y++) {
             if (this->_board->getCellState(x, y) != EMPTY) {
@@ -33,17 +32,15 @@ std::pair<int, int> DefaultBrain::getNextMove(std::pair<int, int> lastMove) {
                                                      [this](const BoardType *board) {
                                                          return this->scoreBoard(board);
                                                      });
-            _board->print("board3.txt");
             moves.emplace_back(std::make_pair(x, y), score);
-            _board->print("board4.txt");
         }
-
     }
     std::sort(moves.begin(), moves.end(),
               [](const auto &a, const auto &b) {
                   return std::get<1>(a) > std::get<1>(b);
               });
-    _board->setCellState(std::get<0>(moves[0]).first, std::get<0>(moves[0]).second, WHITE);
+    _board->setCellState(std::get<0>(moves[0]).first, std::get<0>(moves[0]).second,
+                         WHITE);
     return std::get<0>(moves[0]);
 }
 
@@ -54,7 +51,9 @@ static ABrain::Line getLine(const ABrain::BoardType *board, const int x, const i
                             const int length,
                             const bool isBlockedBefore,
                             const bool isBlockedAfter,
-                            const std::pair<int, int> &start) {
+                            const std::pair<int, int> &start,
+                            std::vector<std::vector<bool> > &visited) {
+    visited[x][y] = true;
     bool newIsBlockedBefore = isBlockedBefore;
     if (x == start.first && y == start.second) {
         if (board->getCellState(x - dx, y - dy) != EMPTY) {
@@ -78,20 +77,25 @@ static ABrain::Line getLine(const ABrain::BoardType *board, const int x, const i
                                    std::make_pair(newIsBlockedBefore, true));
         }
         return getLine(board, newX, newY, dx, dy, isWhite, length + 1, newIsBlockedBefore,
-                       isBlockedAfter, start);
+                       isBlockedAfter, start, visited);
     }
     if (!isWhite) {
         return std::make_tuple(start, length, isWhite,
                                std::make_pair(newIsBlockedBefore, true));
     }
     return getLine(board, newX, newY, dx, dy, isWhite, length + 1, newIsBlockedBefore,
-                   isBlockedAfter, start);
+                   isBlockedAfter, start, visited);
 }
 
 int DefaultBrain::scoreBoard(const BoardType *board) const {
     std::vector<Line> lines;
+    std::vector visited(board->getSize(),
+                        std::vector<bool>(board->getSize(), false));
     for (int x = 0; x < board->getSize(); x++) {
         for (int y = 0; y < board->getSize(); y++) {
+            if (visited[x][y]) {
+                continue;
+            }
             const CellState cellState = board->getCellState(x, y);
             if (cellState == EMPTY || cellState == OUT_OF_BOUND) {
                 continue;
