@@ -5,6 +5,7 @@ all: $(TARGET)
 $(TARGET):
 	cmake . -B build
 	cmake --build build
+	mv build/$(TARGET) .
 
 clean:
 	[ ! -d build ] || cmake --build build --target clean
