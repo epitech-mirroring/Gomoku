@@ -22,7 +22,6 @@ DefaultBrain::DefaultBrain(const BoardType *board, const PlayAnalysis &playAnaly
 std::pair<int, int> DefaultBrain::getNextMove(std::pair<int, int> lastMove) {
     std::vector<std::tuple<std::pair<int, int>, int> > moves;
     _board->setCellState(lastMove.first, lastMove.second, BLACK);
-    _board->print("board1.txt");
     for (int x = 0; x < this->_board->getSize(); x++) {
         for (int y = 0; y < this->_board->getSize(); y++) {
             if (this->_board->getCellState(x, y) != EMPTY) {
@@ -33,9 +32,7 @@ std::pair<int, int> DefaultBrain::getNextMove(std::pair<int, int> lastMove) {
                                                      [this](const BoardType *board) {
                                                          return this->scoreBoard(board);
                                                      });
-            _board->print("board3.txt");
             moves.emplace_back(std::make_pair(x, y), score);
-            _board->print("board4.txt");
         }
 
     }
@@ -139,14 +136,14 @@ int DefaultBrain::scoreBoard(const BoardType *board) const {
 
     // If black has a 5 length line, return -1000
     for (const auto &[_, length, isBlack, isClosed]: blackLines) {
-        if (length == 5) {
+        if (length == 4) {
             return INT_MIN;
         }
     }
 
     // If white has a 5 length line, return 1000
     for (const auto &[_, length, isBlack, isClosed]: whiteLines) {
-        if (length == 5) {
+        if (length == 4) {
             return INT_MAX;
         }
     }
