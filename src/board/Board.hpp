@@ -34,6 +34,8 @@ namespace Gomoku {
 
         void print(const std::string &filename) const;
 
+        bool isValid(int x, int y) const;
+
     protected:
         char *_board;
         int _size;
