@@ -23,9 +23,6 @@ int PlayAnalysis::getScore(const Board *board, const int x, const int y,
                            const std::function<int(const Board *)> &evalFunc,
                            const clock_t start,
                            const int num) const {
-    // Play the given move on the board
-    board->setCellState(x, y, player);
-    
     // Evaluate all the possible responses
     int bestScore = INT_MIN;
     std::vector<std::tuple<std::pair<int, int>, int> > tempMoves;
