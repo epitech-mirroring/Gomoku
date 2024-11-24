@@ -29,7 +29,7 @@ CellState Board::getCellState(const int x, const int y) const {
     const int posInByte = (x + y * _size) % 4;
     const char pos = _board[(x + y * _size - posInByte) / 4];
 
-    switch (pos >> posInByte * 2 & 3) {
+    switch ((pos >> (posInByte * 2)) & 3) {
         case 0:
             return EMPTY;
         case 1:
@@ -45,14 +45,13 @@ void Board::setCellState(const int x, const int y, const CellState state) const 
     int posInByte = (x + y * _size) % 4;
     char *pos = &_board[(x + y * _size - posInByte) / 4];
 
-    posInByte = 4 - posInByte - 1;
     switch (state) {
         case EMPTY:
-            *pos &= ~(3 << posInByte * 2);
+            *pos &= ~(3 << (posInByte * 2));
             break;
 
         case BLACK:
-            *pos &= ~(3 << posInByte * 2);
+            *pos &= ~(3 << (posInByte * 2));
             *pos |= 2 << (posInByte * 2);
             break;
         case WHITE:
@@ -82,8 +81,23 @@ void Board::print(const std::string &filename) const {
     infile.close();
     std::ofstream file(filePath);
 
-    for (int i = 0; i < _mallocSize; i++) {
-        file << _board[i];
+    for (int x = 0; x < _size; x++) {
+        for (int y = 0; y < _size; y++) {
+            switch (getCellState(x, y)) {
+                case EMPTY:
+                    file << ".";
+                    break;
+                case BLACK:
+                    file << "X";
+                    break;
+                case WHITE:
+                    file << "O";
+                    break;
+                default:
+                    break;
+            }
+        }
+        file << std::endl;
     }
     file.close();
 }

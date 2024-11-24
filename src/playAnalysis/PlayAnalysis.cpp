@@ -12,7 +12,7 @@
 using namespace Gomoku;
 
 constexpr int LIMIT = 20;
-constexpr int TIME_LIMIT = 1000;
+constexpr int TIME_LIMIT = 4000;
 
 PlayAnalysis::PlayAnalysis() = default;
 
@@ -25,7 +25,7 @@ int PlayAnalysis::getScore(const Board *board, const int x, const int y,
                            const int num) const {
     // Play the given move on the board
     board->setCellState(x, y, player);
-
+    
     // Evaluate all the possible responses
     int bestScore = INT_MIN;
     std::vector<std::tuple<std::pair<int, int>, int> > tempMoves;
