@@ -57,7 +57,8 @@ int PlayAnalysis::getScore(const Board *board, const int x, const int y,
 
     // Recursively evaluate the moves
     for (const auto &[x, y]: moves) {
-        if (num >= LIMIT || clock() - start >= TIME_LIMIT * CLOCKS_PER_SEC) {
+        std::cerr << "time: " << clock() - start << std::endl;
+        if (num >= LIMIT || clock() - start >= TIME_LIMIT / CLOCKS_PER_SEC) {
             board->setCellState(x, y, EMPTY);
             return bestScore;
         }
@@ -73,7 +74,5 @@ int PlayAnalysis::getScore(const Board *board, const int x, const int y,
     }
 
     board->setCellState(x, y, EMPTY);
-    std::cout << "Move from " << (player == WHITE ? "WHITE" : "BLACK") <<
-            " at " << x << ", " << y << " scored " << bestScore << std::endl;
     return bestScore;
 }

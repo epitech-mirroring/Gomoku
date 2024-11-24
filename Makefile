@@ -11,5 +11,6 @@ clean:
 
 fclean: clean
 	rm -rf build
+	rm -f $(TARGET)
 
 re: fclean all
