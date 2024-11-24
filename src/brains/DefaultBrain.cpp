@@ -107,7 +107,7 @@ int DefaultBrain::scoreBoard(const BoardType *board) const {
                             continue;
                         }
                         Line line = getLine(board, x, y, dx, dy, false, 1, false, false,
-                                            std::make_pair(x, y));
+                                            std::make_pair(x, y), visited);
                         lines.push_back(line);
                     }
                 }
@@ -119,7 +119,7 @@ int DefaultBrain::scoreBoard(const BoardType *board) const {
                         }
                         lines.push_back(getLine(board, x, y, dx, dy, true, 1, false,
                                                 false,
-                                                std::make_pair(x, y)));
+                                                std::make_pair(x, y), visited));
                     }
                 }
             }
